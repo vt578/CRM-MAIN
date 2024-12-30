@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="form.html">Add Customer</a></li>
+            <li><a href="table.html">Customer List</a></li>
+            <li><a href="requirements.html">Requirements</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>Customer List</h1>
+        </header>
+
+        <div class="table-container">
+            <table id="customerTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Date Added</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="customerTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

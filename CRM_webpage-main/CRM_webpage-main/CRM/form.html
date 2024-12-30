@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="form.html">Add New Customer</a></li>
+            <li><a href="table.html">Customer List</a></li>
+            <li><a href="requirements.html">Requirements</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>Customer Form</h1>
+        </header>
+
+        <div class="form-container">
+            <form id="customerForm">
+                <h2 id="formTitle">fill The Details</h2>
+                <input type="hidden" id="editIndex" value="">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="number">Phone Number</label>
+                    <input type="number" id="number" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateAdded">Date Added</label>
+                    <input type="date" id="dateAdded" required>
+                </div>
+                <button type="submit" class="btn">Save</button>
+                <button type="button" id="resetForm" class="btn">Reset</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

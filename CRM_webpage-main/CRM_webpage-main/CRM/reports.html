@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="form.html">Add Customer</a></li>
+            <li><a href="table.html">Customer List</a></li>
+            <li><a href="requirements.html">Requirements</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="reports.html" class="active">Reports</a></li>
+            <li><a href="help.html">Help</a></li>
+       </ul>
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>Reports</h1>
+        </header>
+
+        <div class="reports-container">
+            <h1 class="reports-title">Customer Reports Summary</h1>
+
+            <div id="totalCustomers" class="report-box">
+                Total Customers: 0 
+               </div>
+            <div class="chart-container">
+                <canvas id="customerChart"></canvas> 
+            </div>
+            <div class="chart-container">
+                <canvas id="pieChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="barChart"></canvas> 
+            </div>
+
+            <div class="pagination">
+                <a href="#">Previous</a>
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">Next</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const customers = [
+                { name: "John Doe", purchases: 5, satisfaction: 4 },
+                { name: "Jane Smith", purchases: 3, satisfaction: 3 },
+                { name: "Mike Johnson", purchases: 7, satisfaction: 5 },
+                { name: "Anna Williams", purchases: 6, satisfaction: 4 },
+                { name: "David", purchases: 4, satisfaction: 6 },
+                { name: "Brown", purchases: 13, satisfaction: 6 },
+                { name: "mohan", purchases: 14, satisfaction: 8 },
+                { name: "ram", purchases: 10, satisfaction: 21 },
+                { name: "raj", purchases: 5, satisfaction: 20 },
+
+            ];
+            const totalCustomers = customers.length;
+             const customerData = {
+                monthlyCustomers: [12, 19, 8, 15, 22, 30, 40, 50, 45, 35, 25, 20], 
+                salesCategories: ["Electronics", "Furniture", "Clothing", "Toys", "Books"], 
+                salesDistribution: [35, 20, 15, 10, 20], 
+                satisfactionLevels: customers.map(customer => customer.satisfaction)
+            };
+            document.getElementById("totalCustomers").innerText = `Total Customers: ${totalCustomers}`;
+            const customerCtx = document.getElementById("customerChart").getContext("2d");
+            const customerChart = new Chart(customerCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Customers Per Month',
+                        data: customerData.monthlyCustomers,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Customers'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        }
+                    }
+                }
+            });
+            const pieCtx = document.getElementById("pieChart").getContext("2d");
+            const pieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: customerData.salesCategories,
+                    datasets: [{
+                        data: customerData.salesDistribution,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Sales Distribution by Category'
+                        }
+                    }
+                }
+            });
+            const barCtx = document.getElementById("barChart").getContext("2d");
+            const barChart = new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: customers.map(customer => customer.name), 
+                        datasets: [{
+                        label: 'Customer Satisfaction (out of 5)',
+                        data: customerData.satisfactionLevels,
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Satisfaction Level'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Customer'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

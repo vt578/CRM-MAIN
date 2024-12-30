@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="form.html">Add New Customer</a></li>
+            <li><a href="table.html">Customer List</a></li>
+            <li><a href="requirements.html">Requirements</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="help.html">Help</a></li>
+        </ul>
+</ul>
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>Dashboard</h1>
+        </header>
+
+        <div class="dashboard-container">
+            <div class="summary-cards">
+                <div class="card">
+                    <h3>Total Customers</h3>
+                    <p id="totalCustomersCard">0</p>
+                </div>
+                <div class="card">
+                    <h3>Customers Added This Month</h3>
+                    <p id="customersThisMonthCard">0</p>
+                </div>
+                <div class="card">
+                    <h3>Active Customers</h3>
+                    <p id="activeCustomersCard">0</p>
+                </div>
+                <div class="card">
+                    <h3>Top Customers</h3>
+                    <p id="topCustomersCard">0</p>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <canvas id="customerGrowthChart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <ul id="recentActivityList">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const totalCustomersCard = document.getElementById('totalCustomersCard');
+    const customersThisMonthCard = document.getElementById('customersThisMonthCard');
+    const activeCustomersCard = document.getElementById('activeCustomersCard');
+    const topCustomersCard = document.getElementById('topCustomersCard');
+    const recentActivityList = document.getElementById('recentActivityList');
+    const ctx = document.getElementById('customerGrowthChart').getContext('2d');
+
+    const customers = JSON.parse(localStorage.getItem('customers')) || [];
+    totalCustomersCard.textContent = customers.length;
+    const currentDate = new Date();
+    const customersThisMonth = customers.filter(customer => {
+        const customerDate = new Date(customer.dateAdded);
+        return (
+            customerDate.getMonth() === currentDate.getMonth() &&
+            customerDate.getFullYear() === currentDate.getFullYear()
+        );
+    });
+    customersThisMonthCard.textContent = customersThisMonth.length;
+    activeCustomersCard.textContent = customers.length;
+    const topCustomers = customers.slice(0, 5); 
+    topCustomersCard.textContent = topCustomers.length;
+    customers.slice(-5).forEach(customer => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${customer.name} added on ${customer.dateAdded}`;
+        recentActivityList.appendChild(listItem);
+    });
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const customerGrowthData = Array(12).fill(0);
+
+    customers.forEach(customer => {
+        const customerDate = new Date(customer.dateAdded);
+        customerGrowthData[customerDate.getMonth()] += 1;
+    });
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Customers Added',
+                data: customerGrowthData,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
